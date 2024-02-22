@@ -50,12 +50,16 @@ jobs:
     - name: Print Docker Images
       run: docker images
     
+    - name: Print Docker Push Command
+      run: echo "docker push srgrillo/30daysoofjavascript:\"$NEW_VERSION\""
+      
     - name: Push Docker Image
       env:
         NEW_VERSION: ${{ steps.version.outputs.version }}
       run: |
         docker push srgrillo/30daysoofjavascript:"$NEW_VERSION"
         docker push srgrillo/30daysoofjavascript:latest
+
 
 
 
