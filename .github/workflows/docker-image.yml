@@ -34,34 +34,28 @@ jobs:
       run: |
         docker login -u $DOCKER_USER -p $DOCKER_PASSWORD
         
-- name: Build Docker Image
-  env:
-    NEW_VERSION: ${{ steps.version.outputs.version }}
-  run: |
-    docker buildx create --use
-    docker buildx inspect --bootstrap
-      
-    docker buildx build \
-      --platform linux/amd64,linux/arm64,linux/arm/v7 \
-      -t srgrillo/30daysoofjavascript:$NEW_VERSION \
-      -t srgrillo/30daysoofjavascript:latest \
-      .
-        
-- name: Push Docker Image
-  env:
-    NEW_VERSION: ${{ steps.version.outputs.version }}
-  run: |
-    docker push srgrillo/30daysoofjavascript:$NEW_VERSION
-    docker push srgrillo/30daysoofjavascript:latest
+    - name: Build Docker Image
+      env:
+        NEW_VERSION: ${{ steps.version.outputs.version }}
+      run: |
+        docker buildx create --use
+        docker buildx inspect --bootstrap
+          
+        docker buildx build \
+          --platform linux/amd64,linux/arm64,linux/arm/v7 \
+          -t srgrillo/30daysoofjavascript:$NEW_VERSION \
+          -t srgrillo/30daysoofjavascript:latest \
+          .
+            
+    - name: Push Docker Image
+      env:
+        NEW_VERSION: ${{ steps.version.outputs.version }}
+      run: |
+        docker push srgrillo/30daysoofjavascript:$NEW_VERSION
+        docker push srgrillo/30daysoofjavascript:latest
 
-      
-    
-    
-    
-    
-    #
-    
-    
+# ...
+# (Lines 36 and 41 are now commented out, but you can remove the '#' to include them)
 #
-#     - name: Build the Docker image
-#       run: docker build . --file Dockerfile --tag my-image-name:$(date +%s)
+# - name: Build the Docker image
+#   run: docker build . --file Dockerfile --tag my-image-name:$(date +%s)
